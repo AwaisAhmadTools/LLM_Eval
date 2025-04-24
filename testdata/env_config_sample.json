@@ -1,0 +1,4 @@
+{
+      "OPENAI_API_KEY": "<OPENAI_KEY>",
+      "RAGAS_APP_TOKEN": "<RAGAS_KEY>"
+}
