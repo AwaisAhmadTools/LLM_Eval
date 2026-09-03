@@ -27,7 +27,7 @@ async def test_relevancy_factual(llm_wrapper, get_data):
     print(results)
     print (results['answer_relevancy'])
     assert results['answer_relevancy'][0] > 0.8
-    results.upload()
+    # results.upload()
    # assert all (float(r['answer_relevancy']) > 0.8 for r in results)
 
 

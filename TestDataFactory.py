@@ -21,7 +21,7 @@ def test_data_creation():
     embed = OpenAIEmbeddings()
     loader = DirectoryLoader(
         path=r"C:\Users\aahma\Documents\AI\LLM+Evaluation_Resources\LLM Evaluation_Resources\fs11",
-        glob="**/*.docx",
+        glob="*.docx",
         loader_cls=UnstructuredWordDocumentLoader
     )
     docs = loader.load()
@@ -30,4 +30,4 @@ def test_data_creation():
     generator = TestsetGenerator(llm=langchain_llm,embedding_model=generate_embeddings)
     dataset = generator.generate_with_langchain_docs(docs, testset_size=20)
     print(dataset.to_list())
-    dataset.upload()
+    # dataset.upload()

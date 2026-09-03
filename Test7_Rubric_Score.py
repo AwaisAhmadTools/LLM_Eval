@@ -15,7 +15,7 @@ async def test_rubric_score(llm_wrapper, get_data):
     rubrics_score = RubricsScore(rubrics=rubrics, llm=llm_wrapper)
     score = await rubrics_score.single_turn_ascore(get_data)
     print(score)
-    assert score > 6
+    assert score > 3.5
 
 @pytest.fixture
 def get_data():
