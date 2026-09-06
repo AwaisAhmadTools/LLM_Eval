@@ -3,8 +3,6 @@ from ragas import MultiTurnSample
 from ragas.messages import HumanMessage, AIMessage
 from ragas.metrics import TopicAdherenceScore
 
-
-#@pytest.mark.parametrize("getData", load_test_data("test4_data.json"), indirect=True)
 @pytest.mark.asyncio
 async def test_topic_adherence(llm_wrapper, getData):
     topic_adherence = TopicAdherenceScore(llm=llm_wrapper)
@@ -14,8 +12,6 @@ async def test_topic_adherence(llm_wrapper, getData):
 
 @pytest.fixture
 def getData():
-    #test_data = request.param
-    #responseDict = get_llm_response(test_data)
     conversation = [
         HumanMessage(content="how many articles are there in the selenium web driver python course?"),
         AIMessage(content="There are 23 articles in the Selenium WebDriver Python course."),

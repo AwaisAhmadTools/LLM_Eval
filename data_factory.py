@@ -14,15 +14,13 @@ with open('testdata/env_config.json') as f:
 os.environ["RAGAS_APP_TOKEN"] = env_config["RAGAS_APP_TOKEN"]
 
 def test_data_creation():
-    # nltk.data.path.append(r"C:\Users\aahma\Documents\AI\LLM+Evaluation_Resources\nltk_data")
     nltk.download('punkt')
     llm = ChatOpenAI(model_name="gpt-4o", temperature=0)
     langchain_llm = LangchainLLMWrapper(llm)
     # convert data to vector format
     embed = OpenAIEmbeddings()
     loader = DirectoryLoader(
-        #path=r"C:\Users\aahma\Documents\AI\LLM+Evaluation_Resources\LLM Evaluation_Resources\fs11",
-        path = Path(__file__).parent.absolute()/"resources"
+        path = Path(__file__).parent.absolute()/"resources",
         glob = "*.docx",
         loader_cls = UnstructuredWordDocumentLoader
     )
