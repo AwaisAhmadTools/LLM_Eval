@@ -4,14 +4,14 @@ from ragas.messages import HumanMessage, AIMessage
 from ragas.metrics import TopicAdherenceScore
 
 @pytest.mark.asyncio
-async def test_topic_adherence(llm_wrapper, getData):
+async def test_topic_adherence(llm_wrapper, get_data):
     topic_adherence = TopicAdherenceScore(llm=llm_wrapper)
-    score = await topic_adherence.multi_turn_ascore(getData)
+    score = await topic_adherence.multi_turn_ascore(get_data)
     print(score)
     assert score > 0.8
 
 @pytest.fixture
-def getData():
+def get_data():
     conversation = [
         HumanMessage(content="how many articles are there in the selenium web driver python course?"),
         AIMessage(content="There are 23 articles in the Selenium WebDriver Python course."),

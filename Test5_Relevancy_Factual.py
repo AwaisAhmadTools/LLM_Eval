@@ -1,16 +1,9 @@
-import json
-import os
 import math
 import pytest
 from ragas import SingleTurnSample, EvaluationDataset, evaluate
 from ragas.metrics import ResponseRelevancy, FactualCorrectness
-
 from utils import load_test_data, get_llm_response
 
-with open('testdata/env_config.json') as f:
-    env_config = json.load(f)
-
-os.environ["RAGAS_APP_TOKEN"] = env_config["RAGAS_APP_TOKEN"]
 @pytest.mark.parametrize("get_data", load_test_data("test5_data.json"), indirect=True)
 @pytest.mark.asyncio
 async def test_relevancy_factual(llm_wrapper, get_data):

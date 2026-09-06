@@ -1,5 +1,43 @@
 
+# LLM_Eval — an evaluation suite for RAG systems
 
+RAG (Retrieval-Augmented Generation) systems don't fail like normal software.
+They don't throw exceptions — they return confident, fluent, plausible answers
+that may be wrong. Traditional asserts can't catch a hallucination.
+
+This suite treats a RAG pipeline as a system under test and measures its
+quality across three layers: what it retrieves, what it generates, and
+how it behaves in conversation — 7 metrics, LLM-judged, threshold-gated.
+
+## Layout
+
+| File | Metric(s) | Layer |
+|---|---|---|
+| `Test1_Context_Precision.py` | Context Precision | retrieval |
+| `Test3_Context_Recall.py` | Context Recall | retrieval |
+| `Test4_Faithfulness.py` | Faithfulness (hallucination check) | generation |
+| `Test5_Relevancy_Factual.py` | Answer Relevancy + Factual Correctness | generation |
+| `Test6_Topic_Adherence.py` | Topic Adherence (multi-turn) | conversation |
+| `Test7_Rubric_Score.py` | Rubric scoring (custom criteria) | custom |
+| `conftest.py` | judge fixture (gpt-4o, temperature=0) | harness |
+| `utils.py` | the system-under-test seam | harness |
+| `data_factory.py` | synthetic test-set generation from source docs | tooling |
+
+## The seam
+
+The system under test is a single URL. `utils.get_llm_response()` makes one
+call to the RAG endpoint — embedding, retrieval, prompt assembly and
+generation all happen inside it. The suite doesn't know or care how the system
+is built; to point the whole suite at a different system, change one URL.
+
+## Running
+
+```
+pip install -r requirements.txt
+pytest            # or: pytest -v -s  (to see individual scores)
+```
+
+Requires `testdata/env_config.json` (gitignored) with your OpenAI key.
 
 ## How a test is built — the five steps
 
