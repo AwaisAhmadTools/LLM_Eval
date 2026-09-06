@@ -1,10 +1,7 @@
 import pytest
-from langchain_community.utils.ernie_functions import convert_pydantic_to_ernie_tool
-from ragas import SingleTurnSample, MultiTurnSample
+from ragas import MultiTurnSample
 from ragas.messages import HumanMessage, AIMessage
-from ragas.metrics import Faithfulness, TopicAdherenceScore
-
-from utils import load_test_data, get_llm_response
+from ragas.metrics import TopicAdherenceScore
 
 
 #@pytest.mark.parametrize("getData", load_test_data("test4_data.json"), indirect=True)
