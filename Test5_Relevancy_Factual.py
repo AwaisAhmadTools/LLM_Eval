@@ -1,16 +1,9 @@
-import json
-import os
-
+import math
 import pytest
 from ragas import SingleTurnSample, EvaluationDataset, evaluate
 from ragas.metrics import ResponseRelevancy, FactualCorrectness
-
 from utils import load_test_data, get_llm_response
 
-with open('testdata/env_config.json') as f:
-    env_config = json.load(f)
-
-os.environ["RAGAS_APP_TOKEN"] = env_config["RAGAS_APP_TOKEN"]
 @pytest.mark.parametrize("get_data", load_test_data("test5_data.json"), indirect=True)
 @pytest.mark.asyncio
 async def test_relevancy_factual(llm_wrapper, get_data):
@@ -26,8 +19,9 @@ async def test_relevancy_factual(llm_wrapper, get_data):
     '''
     print(results)
     print (results['answer_relevancy'])
-    assert results['answer_relevancy'][0] > 0.8
-    # results.upload()
+    score =  results['answer_relevancy'][0]
+    assert math.isfinite(score), "Judge returned NaN — LLM/API failure, not an answer failure"
+    assert score > 0.8
    # assert all (float(r['answer_relevancy']) > 0.8 for r in results)
 
 

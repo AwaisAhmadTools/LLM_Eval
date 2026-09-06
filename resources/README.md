@@ -1,0 +1,1 @@
+Add source documents here (PDFs, docx, txt). Not committed — resources/*.docx is gitignored. Forms the local test corpus
