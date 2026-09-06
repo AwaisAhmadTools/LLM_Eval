@@ -1,5 +1,5 @@
 
-Add documents here, not committed — this forms the test corpus locally.
+
 
 ## How a test is built — the five steps
 
