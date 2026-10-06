@@ -5,9 +5,12 @@ from langchain_openai import ChatOpenAI
 from ragas.llms import LangchainLLMWrapper
 from pathlib import Path
 
-with open(Path(__file__).parent / "testdata" / "env_config.json") as f:
+with open(
+    Path(__file__).parent / "testdata" / "env_config.json", encoding="utf-8"
+) as f:
     env_config = json.load(f)
 os.environ["OPENAI_API_KEY"] = env_config["OPENAI_API_KEY"]
+
 
 @pytest.fixture
 def llm_wrapper():

@@ -1,4 +1,3 @@
-import math
 import pytest
 from ragas import SingleTurnSample, EvaluationDataset, evaluate
 from ragas.metrics import ResponseRelevancy, FactualCorrectness
@@ -33,9 +32,6 @@ async def test_relevancy_factual(llm_wrapper, get_data):
     )
     assert_score(relevancy, 0.8, "relevancy")
     assert_score(factual, 0.8, "factual correctness")  # known limitation — see README
-
-
-# assert all (float(r['answer_relevancy']) > 0.8 for r in results)
 
 
 @pytest.fixture

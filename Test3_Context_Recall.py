@@ -1,10 +1,5 @@
-import os
-
 import pytest
-import requests
-from langchain_openai import ChatOpenAI
 from ragas import SingleTurnSample
-from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import LLMContextRecall
 
 from utils import get_llm_response, load_test_data, assert_score
@@ -29,9 +24,7 @@ def get_data(request):
     sample = SingleTurnSample(
         user_input=test_data["question"],
         retrieved_contexts=[
-            response_dict["retrieved_docs"][0]["page_content"],
-            response_dict["retrieved_docs"][1]["page_content"],
-            response_dict["retrieved_docs"][2]["page_content"],
+            doc["page_content"] for doc in response_dict["retrieved_docs"]
         ],
         reference=test_data["reference"],
     )

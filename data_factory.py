@@ -8,10 +8,14 @@ from ragas.llms import LangchainLLMWrapper
 from ragas.testset import TestsetGenerator
 import nltk
 
-with open('testdata/env_config.json') as f:
+with open(
+    Path(__file__).parent / "testdata" / "env_config.json", encoding="utf-8"
+) as f:
     env_config = json.load(f)
 
-os.environ["RAGAS_APP_TOKEN"] = env_config["RAGAS_APP_TOKEN"]
+# Only needed if you enable the cloud upload (`dataset.upload()`) at the bottom of this file.
+if env_config.get("RAGAS_APP_TOKEN"):
+    os.environ["RAGAS_APP_TOKEN"] = env_config["RAGAS_APP_TOKEN"]
 
 def test_data_creation():
     nltk.download('punkt')

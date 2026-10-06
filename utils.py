@@ -4,7 +4,9 @@ import requests
 import math
 
 CONFIG = json.loads(
-    (Path(__file__).parent / "testdata" / "env_config.json").read_text()
+    (Path(__file__).parent / "testdata" / "env_config.json").read_text(
+        encoding="utf-8"
+    )
 )
 TARGET = os.getenv("RAG_TARGET", CONFIG["active_target"])
 API_URL = CONFIG["targets"][TARGET]["api_url"]
@@ -12,9 +14,13 @@ DATA_DIR = Path(__file__).parent / "testdata" / TARGET
 
 
 def get_llm_response(test_data):
-    return requests.post(
-        API_URL, json={"question": test_data["question"], "chat_history": []}
-    ).json()
+    response = requests.post(
+        API_URL,
+        json={"question": test_data["question"], "chat_history": []},
+        timeout=60,
+    )
+    response.raise_for_status()
+    return response.json()
 
 
 def load_test_data(filename):
