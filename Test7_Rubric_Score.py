@@ -1,10 +1,12 @@
 import pytest
 from ragas import SingleTurnSample
 from ragas.metrics import RubricsScore
+from utils import assert_score
+
 
 @pytest.mark.asyncio
 async def test_rubric_score(llm_wrapper, get_data):
-    rubrics={
+    rubrics = {
         "score1_description": "The response is incorrect, irrelevant, or does not align with the ground truth.",
         "score2_description": "The response partially matches the ground truth but includes significant errors, omissions, or irrelevant information.",
         "score3_description": "The response generally aligns with the ground truth but may lack detail, clarity, or have minor inaccuracies.",
@@ -15,13 +17,14 @@ async def test_rubric_score(llm_wrapper, get_data):
     rubrics_score = RubricsScore(rubrics=rubrics, llm=llm_wrapper)
     score = await rubrics_score.single_turn_ascore(get_data)
     print(score)
-    assert score > 3.5
+    assert_score(score, 3.5, "rubric score")
+
 
 @pytest.fixture
 def get_data():
     sample = SingleTurnSample(
         user_input="Where is the Eiffel Tower located?",
         response="The Eiffel Tower is located in Paris.",
-        reference="The Eiffel Tower is located in Paris."
+        reference="The Eiffel Tower is located in Paris.",
     )
     return sample

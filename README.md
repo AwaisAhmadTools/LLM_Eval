@@ -114,3 +114,36 @@ factual; fluent-but-invented passes relevancy, fails faithfulness.
 |---|---|---|---|
 | Topic Adherence | Test6 | Across a multi-turn conversation, does the assistant stay within the allowed topic space? The seed of agent evaluation. | ✅ (reference_topics) |
 | Rubric Score | Test7 | The judge scores the answer against a scale you write in plain English — how you evaluate domain-specific quality (e.g. regulatory or ethical criteria) that generic metrics can't express. | ✅ |
+
+## Known limitations — and why the board is red
+
+`test_relevancy_factual` currently fails 4 of 6 cases on the local target. **This is a limitation of
+the instrument (the metric and its ground truth), not a defect found in the system under test.**
+Every failing answer was read by hand and verified as grounded, complete and on-topic.
+
+**Evidence**
+- **Run-to-run variance:** identical inputs produced different scores between runs — q6 faithfulness
+  0.846 → 1.000; q4 relevancy 0.9963 → 1.000. A metric that moves between runs cannot support a
+  fixed threshold.
+- **Hand audit, 6 of 6:** every low factual-correctness score traced to a reference/measurement cause,
+  in three modes — *scope* (the reference demands claims the question never asked), *source variance*
+  (the corpus states the same fact two ways; the answer cites one, the reference the other),
+  *thinness* (a reference less complete than a good answer, so `f1`'s precision half penalises extra
+  *correct* content).
+- **Cross-metric disagreement:** faithfulness = 1.00 (fully grounded in retrieved context) alongside
+  factual correctness = 0.40. When the anti-invention metric passes and the reference-based metric
+  fails, the reference is the suspect.
+
+**Latest local-target results:** precision 1.00×6 · recall 1.00×6 · faithfulness 1.00×6 ·
+relevancy 0.908–1.000 · factual correctness (`mode=recall`) 0.45–0.87 (4 of 6 below the 0.8 gate).
+
+**Deliberately not done:** the threshold is *not* lowered to make the board green. The metric is shown
+to be unstable, so its gate stands as a known, visible defect. The fix is to measure variance (N≥5
+runs) and set thresholds empirically — not to move the bar.
+
+**Degradation test (2026-10-05):** feeding Test3 only the first retrieved chunk (`docs[:1]`) — a
+deliberate retrieval regression — left context recall at **1.000 for 5 of 6 questions** and dropped
+it only on q6 (0.500). The metric can fail (it is not dead), but it is close to blind: five
+references are fully satisfiable from a single chunk, so a real retrieval regression would not be
+caught. **Fix (M2):** write references whose claims span more than one source, as q6's does, then
+run the degradation test permanently as proof the suite *can* fail.

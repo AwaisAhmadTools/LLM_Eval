@@ -1,0 +1,32 @@
+[
+    {
+        "id": "q1",
+        "question": "What is murabaha?",
+        "reference": "Murabahah is an asset-based Islamic financing arrangement in which the financier purchases and assumes ownership and risk of an asset before selling it to the client at an agreed markup, often with instalment repayments."
+    },
+    {
+        "id": "q2",
+        "question": "What are the ayahs that prohibit riba?",
+        "reference": "The Qur’anic passages addressing the prohibition of riba are Al-Rum 30:39, Al-Nisa 4:161, Ali ‘Imran 3:130–132, and Al-Baqarah 2:275–281."
+    },
+    {
+        "id": "q3",
+        "question": "What are the different types of riba?",
+        "reference": "riba al-fadl involves excess or disparity in the exchange of similar commodities — e.g. excess compensation paid without any consideration in return."
+    },
+    {
+        "id": "q4",
+        "question": "How does murabaha differ from a conventional interest-based loan?",
+        "reference": "Murabaha is an asset-based sale in which the financier purchases and assumes ownership and risk of a commodity before selling it to the client at an agreed markup, whereas a conventional interest-based loan provides money and charges interest on the debt. In murabaha, no further markup or penalty is added after default, so the amount owed does not increase over time."
+    },
+    {
+        "id": "q5",
+        "question": "How do interest-free treasury bonds work?",
+        "reference": "IFTBs are zero-coupon, asset-backed notes issued by the government treasury and sold to banks. The buyer pays a nominal amount ($A) and, at maturity, gains the right to an interest-free loan of the same amount for an agreed period (N months), where the amount × time product is held constant ($A/2 for 2N months, $A/3 for 3N months). They are tradeable on the secondary market, where the price is set by supply and demand rather than a preset interest rate."
+    },
+    {
+        "id": "q6",
+        "question": "How can blockchain improve transparency in zakat or charity distribution?",
+        "reference": "Blockchain can improve transparency in zakat and charity distribution by creating an immutable and auditable record that allows funds to be tracked from collection through to distribution and their intended purpose. Smart contracts and decentralized verification can further increase accountability, transaction security, and donor trust."
+    }
+]
