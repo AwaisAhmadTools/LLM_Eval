@@ -1,9 +1,12 @@
 import pytest
 from ragas import SingleTurnSample
 from ragas.metrics import LLMContextPrecisionWithoutReference
-from utils import load_test_data, get_llm_response
+from utils import load_test_data, get_llm_response, assert_score
 
-@pytest.mark.parametrize("get_data", load_test_data("test1_data.json"), indirect=True)
+DATA = load_test_data("dataset.json")
+
+
+@pytest.mark.parametrize("get_data", DATA, indirect=True, ids=[d["id"] for d in DATA])
 @pytest.mark.asyncio
 async def test_context_precision(llm_wrapper, get_data):
     # create object of class for that specific metric
@@ -13,8 +16,9 @@ async def test_context_precision(llm_wrapper, get_data):
 
     # Get the score
     score = await context_precision.single_turn_ascore(get_data)
-    print(score)
-    assert score > 0.8
+    print(f"{get_data.user_input} → precision: {score:.3f}")
+    assert_score(score, 0.8, "context precision")
+
 
 @pytest.fixture
 def get_data(request):
@@ -25,10 +29,11 @@ def get_data(request):
     sample = SingleTurnSample(
         user_input=test_data["question"],
         response=response_dict["answer"],
-        retrieved_contexts=[response_dict["retrieved_docs"][0]["page_content"],
-                            response_dict["retrieved_docs"][1]["page_content"],
-                            response_dict["retrieved_docs"][2]["page_content"]
-                            ]
+        retrieved_contexts=[
+            response_dict["retrieved_docs"][0]["page_content"],
+            response_dict["retrieved_docs"][1]["page_content"],
+            response_dict["retrieved_docs"][2]["page_content"],
+        ],
     )
 
     return sample

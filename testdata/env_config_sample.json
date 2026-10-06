@@ -1,4 +1,12 @@
 {
       "OPENAI_API_KEY": "<OPENAI_KEY>",
-      "RAGAS_APP_TOKEN": "<RAGAS_KEY>"
+      "active_target": "<target1>",
+      "targets": {
+            "<target1>": {
+                  "api_url": "<url1>"
+            },
+            "<target2>": {
+                  "api_url": "<url2>"
+            }
+      }
 }
